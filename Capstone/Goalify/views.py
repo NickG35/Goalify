@@ -9,6 +9,9 @@ from .models import User
 def index(request):
      return render(request, 'goalify/index.html')
 
+def history(request):
+     return render(request, "goalify/history.html")
+
 def login_view(request):
      if request.method == "POST":
 
@@ -24,6 +27,8 @@ def login_view(request):
                return render(request, "goalify/login.html", {
                     "message": "Invalid username and/or password."
                })
+     else:
+          return render(request, "goalify/login.html")
 
 def logout_view(request):
      logout(request)
