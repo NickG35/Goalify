@@ -13,24 +13,29 @@
 <body>
     <nav class="navbar dark bg-dark  navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'index' %}">Goalify</a>
+          {% if user.is_authenticated %}
+          <a class="navbar-brand" href="{% url 'index' %}">Home</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+          {% endif %}
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
+              {% if user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{% url 'history' %}">Goal History</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
               </li>
+              {% else %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'login' %}">Login</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'register' %}">Register</a>
               </li>
+              {% endif %}
             </ul>
         </div>
     </div>
