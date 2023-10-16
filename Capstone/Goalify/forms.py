@@ -36,23 +36,3 @@ class GoalForm(ModelForm):
         self.fields['name'].widget.attrs['placeholder'] = "Write a New Goal"
         self.fields['goal_time'].widget.attrs['placeholder'] = "Duration of Each Goal Attempt"
         self.fields['frequency'].widget.attrs['placeholder'] = "Number of Total Goal Attempts" 
-
-class BiddingForm(ModelForm):
-    class Meta:
-        model = Bidding
-        fields = ('bid_amount',)
-
-    def __init__(self, *args, **kwargs):
-        super(ModelForm, self).__init__(*args, **kwargs)
-        self.fields['bid_amount'].label = ""
-        self.fields['bid_amount'].widget.attrs['placeholder'] =  "Make a bid"
-
-class WishlistForm(ModelForm):
-      class Meta:
-        model = Wishlist
-        fields = ('title', 'description', 'id')
-
-class ClosedForm(ModelForm):
-    class Meta:
-        model = Closed_listings
-        fields = ('title', 'description', 'id')
