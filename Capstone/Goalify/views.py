@@ -3,11 +3,30 @@ from django.db import IntegrityError
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import User
+from .models import User, Journal, Goal
+from .forms import JournalForm, GoalForm
+from datetime import datetime
 
  # Create your views here.
 def index(request):
-     return render(request, 'goalify/index.html')
+     journals = Journal.objects.all().order_by('journal_name').all()
+     if request.method == "POST":
+          form = JournalForm(request.POST)
+          if form.is_valid():
+               new_journal = form.save()
+               design = request.POST['journal_style']
+               name = request.POST['journal_name']
+               new_journal.journal_name = name
+               new_journal.journal_style = design
+               new_journal.user = request.user
+               new_journal.save()
+          return HttpResponseRedirect('#')
+     else:
+          form = JournalForm         
+          return render(request, 'goalify/index.html', {
+               'form': form,
+               'journals': journals
+          })
 
 def history(request):
      return render(request, "goalify/history.html")

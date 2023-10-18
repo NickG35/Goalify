@@ -2,6 +2,12 @@
 
 {% block body%}
     <h3>Hello, {{ request.user.username }}.</h3>
+    <div class="journal-form">
+        <form>
+            {{ form }}
+            <button type="submit" class="btn btn-primary">Add Journal</button>
+        </form>
+    </div>
     <h1>Your Journals</h1>
     <h1>Goal Tracker</h1>
 {% endblock %}
