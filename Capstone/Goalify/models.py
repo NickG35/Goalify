@@ -5,9 +5,15 @@ from django.db import models
 class User(AbstractUser):
     pass
 
+COLOR_CHOICES = (
+    ("red", "Red"),
+    ("blue", "Blue"),
+    ("green", "Green"),
+    ("yellow", "Yellow"),
+)
 class Journal(models.Model):
     journal_style = models.ImageField(null=True, blank=True)
-    journal_color = models.CharField(max_length = 15, null = True, blank = True)
+    journal_color = models.CharField(max_length = 15, choices = COLOR_CHOICES, null = True, blank = True)
     journal_name = models.CharField(max_length = 50, null = True, blank = True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null = True, blank = True)
 

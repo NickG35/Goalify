@@ -8,6 +8,13 @@
             <button type="submit" class="btn btn-primary">Add Journal</button>
         </form>
     </div>
+    <img class="journal-design" src="/static/Images/Red.png" alt="journal-style"></img>
     <h1>Your Journals</h1>
+    <div>
+        {% for journal in journals %}
+            <p>{ journal.user }</p>
+            <p>{journal.name }</p>
+        {% endfor %}
+    </div>
     <h1>Goal Tracker</h1>
 {% endblock %}

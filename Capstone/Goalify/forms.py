@@ -5,14 +5,16 @@ from .models import Journal, Goal, Entries
 class JournalForm(ModelForm):
     class Meta:
         model = Journal
-        fields = ('journal_style','journal_name','user')
+        fields = ('journal_style', 'journal_color', 'journal_name','user')
 
     def __init__(self, *args, **kwargs):
         super(ModelForm, self).__init__(*args, **kwargs)
         self.fields['journal_style'].label = ""
+        self.fields['journal_color'].label = "Choose Color"
         self.fields['journal_name'].label = ""
         self.fields['user'].label = ""
         self.fields['user'].widget = forms.HiddenInput()
+        self.fields['journal_style'].widget.attrs['placeholder'] = "Pick Journal Color"
         self.fields['journal_style'].widget.attrs['placeholder'] = "Pick Journal Color"
         self.fields['journal_name'].widget.attrs['placeholder'] = "Name Your Journal"
 
