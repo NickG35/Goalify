@@ -13,7 +13,7 @@ COLOR_CHOICES = (
 )
 class Journal(models.Model):
     journal_style = models.ImageField(null=True, blank=True)
-    journal_color = models.CharField(max_length = 15, choices = COLOR_CHOICES, null = True, blank = True)
+    journal_color = models.CharField(max_length = 15, choices = COLOR_CHOICES, null = False, blank = False, default = "Red")
     journal_name = models.CharField(max_length = 50, null = True, blank = True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null = True, blank = True)
 

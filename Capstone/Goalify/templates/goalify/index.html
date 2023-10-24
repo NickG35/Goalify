@@ -1,14 +1,28 @@
 {% extends "goalify/layout.html" %}
 
 {% block body%}
+<script>
+    function customize(){
+        var color_form = document.getElementById("journal_color");
+        var color = color_form.value;
+        var change = document.getElementById('journal-design').src = `/static/Images/${color}.png`;
+    }
+
+    function set_pic(){
+        var color_form = document.getElementById("journal_color");
+        var color = color_form.value;
+        var picture_field = document.getElementById('journal_style');
+        picture_field.value = `${color}.png`;
+    }
+</script>
     <h3>Hello, {{ request.user.username }}.</h3>
     <div class="journal-form">
-        <form>
+        <form onsubmit="set_pic(this)" onchange="customize(this)">
             {{ form }}
             <button type="submit" class="btn btn-primary">Add Journal</button>
         </form>
     </div>
-    <img class="journal-design" src="/static/Images/Red.png" alt="journal-style"></img>
+    <img id="journal-design" src="/static/Images/Red.png" alt="journal-pic"></img>
     <h1>Your Journals</h1>
     <div>
         {% for journal in journals %}
