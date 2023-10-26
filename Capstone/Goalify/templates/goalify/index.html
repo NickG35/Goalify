@@ -7,17 +7,11 @@
         var color = color_form.value;
         var change = document.getElementById('journal-design').src = `/static/Images/${color}.png`;
     }
-
-    function set_pic(){
-        var color_form = document.getElementById("journal_color");
-        var color = color_form.value;
-        var picture_field = document.getElementById('journal_style');
-        picture_field.value = `${color}.png`;
-    }
 </script>
     <h3>Hello, {{ request.user.username }}.</h3>
     <div class="journal-form">
-        <form onsubmit="set_pic(this)" onchange="customize(this)">
+        <form action="" method="POST" onchange="customize(this)">
+            {% csrf_token %}
             {{ form }}
             <button type="submit" class="btn btn-primary">Add Journal</button>
         </form>
@@ -26,8 +20,8 @@
     <h1>Your Journals</h1>
     <div>
         {% for journal in journals %}
-            <p>{ journal.user }</p>
-            <p>{journal.name }</p>
+            <img id="journal-design" src="{{ journal.journal_style.url }}">
+            <p><a href= "#">{{ journal.journal_name }}</a></p>
         {% endfor %}
     </div>
     <h1>Goal Tracker</h1>

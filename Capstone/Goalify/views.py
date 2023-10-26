@@ -14,9 +14,12 @@ def index(request):
           form = JournalForm(request.POST)
           if form.is_valid():
                new_journal = form.save()
+               new_journal.journal_color = request.POST['journal_color']
+               new_journal.journal_style = f"{new_journal.journal_color}.png"
+               new_journal.journal_name = request.POST['journal_name']
                new_journal.user = request.user
                new_journal.save()
-          return HttpResponseRedirect('#')
+          return HttpResponseRedirect(reverse("index"))
      else:
           form = JournalForm         
           return render(request, 'goalify/index.html', {

@@ -11,10 +11,9 @@ class JournalForm(ModelForm):
         super(ModelForm, self).__init__(*args, **kwargs)
         self.fields['journal_color'].label = "Choose Color"
         self.fields['journal_name'].label = ""
-        self.fields['user'].label = ""
-        self.fields['user'].widget = forms.HiddenInput()
         self.fields['journal_style'].widget.attrs['id'] = "journal_style"
         self.fields['journal_style'].widget = forms.HiddenInput()
+        self.fields['user'].widget = forms.HiddenInput()
         self.fields['journal_color'].widget.attrs['id'] = "journal_color"
         self.fields['journal_name'].widget.attrs['placeholder'] = "Name Your Journal"
 
