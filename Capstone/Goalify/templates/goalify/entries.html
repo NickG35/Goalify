@@ -1,0 +1,19 @@
+{% extends "goalify/layout.html" %}
+
+{% block body%}
+    <div class="entry-form">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ formy }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <h1>Journal Entry</h1>
+    <div class="entry">
+        {% for entry in entries %}
+            <p>{{ entry.date}}</p>
+            <p>{{ entry.content }}</p>
+        {% endfor %}
+    </div>
+    <h1>Goal Tracker</h1>
+{% endblock %}

@@ -20,3 +20,4 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(User, UserAdmin)
 admin.site.register(Journal)
 admin.site.register(Goal)
+admin.site.register(Entries)

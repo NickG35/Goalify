@@ -20,13 +20,13 @@ class JournalForm(ModelForm):
 class EntryForm(ModelForm):
     class Meta:
         model = Entries
-        fields = ('date','content')
+        fields = ('date','content', 'journal')
 
     def __init__(self, *args, **kwargs):
         super(ModelForm, self).__init__(*args, **kwargs)
-        self.fields['date'].label = ""
         self.fields['content'].label = ""
         self.fields['date'].widget = forms.HiddenInput()
+        self.fields['journal'].widget = forms.HiddenInput()
         self.fields['content'].widget.attrs['placeholder'] = "Write New Journal Entry"
 
 

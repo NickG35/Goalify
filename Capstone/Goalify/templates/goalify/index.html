@@ -21,7 +21,7 @@
     <div>
         {% for journal in journals %}
             <img id="journal-design" src="{{ journal.journal_style.url }}">
-            <p><a href= "#">{{ journal.journal_name }}</a></p>
+            <p><a href= "{% url 'entry' journal_id=journal.id %}">{{ journal.journal_name }}</a></p>
         {% endfor %}
     </div>
     <h1>Goal Tracker</h1>
