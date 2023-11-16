@@ -25,4 +25,33 @@
         {% endfor %}
     </div>
     <h1>Goal Tracker</h1>
+    <div class="goal-form">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ formo }}
+            <button type="submit" class="btn btn-primary">Add Goal</button>
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Goal</th>
+            <th scope="col">Duration of Goal</th>
+            <th scope="col">Goal Frequency</th>
+            <th scope="col">Progress</th>
+            <th scope="col">Timer</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for goal in goals %}
+          <tr>
+                <td>{{ goal.name }}</td>
+                <td>{{ goal.goal_time }} minutes</td>
+                <td>{{ goal.frequency }}</td>
+                <td>0/{{ goal.frequency }}</td>
+                <td><a href= "{% url 'timer' timer_id=goal.id %}">Submit</button></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 {% endblock %}

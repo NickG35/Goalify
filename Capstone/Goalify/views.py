@@ -3,15 +3,19 @@ from django.db import IntegrityError
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import User, Journal, Goal, Entries
-from .forms import JournalForm, GoalForm, EntryForm
+from .models import User, Journal, Goal, Entries, Timer
+from .forms import JournalForm, GoalForm, EntryForm, TimerForm
 from datetime import datetime
+import time
+import json
 current_time = datetime.now()
 
  # Create your views here.
 def index(request):
+     goals = Goal.objects.filter(user=request.user).all()
      journals = Journal.objects.filter(user=request.user).all()
      if request.method == "POST":
+          formo = GoalForm(request.POST)
           form = JournalForm(request.POST)
           if form.is_valid():
                new_journal = form.save()
@@ -20,16 +24,29 @@ def index(request):
                new_journal.journal_name = request.POST['journal_name']
                new_journal.user = request.user
                new_journal.save()
-          return HttpResponseRedirect(reverse("index"))
+               return HttpResponseRedirect(reverse("index"))
+          if formo.is_valid():
+               new_goal = formo.save()
+               new_goal.user = request.user
+               new_goal.name = request.POST['name']
+               new_goal.goal_time = request.POST['goal_time']
+               new_goal.frequency = request.POST['frequency']
+               new_goal.date = current_time
+               new_goal.save()
+               Timer.objects.create(id=new_goal.id, time=new_goal.goal_time)
+               return HttpResponseRedirect(reverse("index"))
      else:
+          formo = GoalForm
           form = JournalForm         
           return render(request, 'goalify/index.html', {
                'form': form,
-               'journals': journals
+               'formo': formo,
+               'journals': journals,
+               'goals': goals
           })
 
 def entry(request, journal_id):
-     entries = Entries.objects.filter(journal_id=journal_id).all()
+     entries = Entries.objects.filter(journal_id=journal_id).all().order_by('-date')
      journal = Journal.objects.get(id=journal_id)
      if request.method == "POST":
           formy = EntryForm(request.POST)
@@ -48,6 +65,15 @@ def entry(request, journal_id):
                'entries': entries
           })
 
+def timer(request, timer_id):
+          times = Timer.objects.filter(id=timer_id).all()
+          clock = times.values_list('time', flat=True)[0]
+          moving_time = "00:00"
+          return render(request, "goalify/timer.html", {
+               'times': times,
+               'clock': clock,
+               'moving_time': moving_time
+          })
      
 
 def history(request):

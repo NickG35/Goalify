@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
-from .models import Journal, Entries, Goal, User
+from .models import Journal, Entries, Goal, User, Timer
 
 # Register your models here.
 class JournalInline(admin.StackedInline):
@@ -21,3 +21,4 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Journal)
 admin.site.register(Goal)
 admin.site.register(Entries)
+admin.site.register(Timer)

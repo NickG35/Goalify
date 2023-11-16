@@ -1,0 +1,43 @@
+{% extends "goalify/layout.html" %}
+
+{% block body %}
+
+   {% for time in times %}
+    <p>{{ time.id }}</p>
+    <p class="original">{{ time.time }}</p>
+    {% endfor %}
+    <p class="clock">{{ clock }}</p>
+    <p class="moving_time">{{ clock }}:00</p>
+    <button onclick="start_timer()" class="button">Start</button>
+    <button onclick="pause_time()" class="button">Reset</button>
+
+    <script>
+       function countdownTimer(minutes) {
+            let totalSeconds = minutes * 60;
+
+            const timerInterval = setInterval(function() {
+                const mins = Math.floor(totalSeconds / 60);
+                const secs = totalSeconds % 60;
+
+                const timerDisplay = `${String(mins)}:${String(secs).padStart(2, '0')}`;
+                document.querySelector('.moving_time').innerHTML = timerDisplay;
+
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    document.querySelector('.moving_time').innerHTML = "Time's up!";
+                } else {
+                    totalSeconds--;
+                }
+            }, 1000);
+        }
+    function start_timer() {
+        timey = document.querySelector('.clock').innerHTML;
+        countdownTimer(timey)
+    }
+
+    function pause_time () {
+        timer = document.querySelector('.moving_time')
+        clearInterval(timer);
+    }
+    </script>
+{% endblock %}

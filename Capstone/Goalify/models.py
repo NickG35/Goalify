@@ -35,7 +35,13 @@ class Goal(models.Model):
     goal_time = models.IntegerField(blank= True, null = True)
     frequency = models.IntegerField(blank = True, null = True)
     date = models.DateTimeField(null = True, blank = True)
-    progress = models.IntegerField(blank = True, null = True)
 
     def __str__(self):
         return self.name
+
+class Timer(models.Model):
+    id = models.IntegerField( primary_key=True, blank = True, null = False)
+    time = models.IntegerField(blank = True, null = True)
+
+    def __int__(self):
+        return self.id

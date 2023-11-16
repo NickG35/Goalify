@@ -1,6 +1,7 @@
 {% extends "goalify/layout.html" %}
 
 {% block body%}
+    <h1>{{ entry.journal }}</h1>
     <div class="entry-form">
         <form action="" method="POST">
             {% csrf_token %}
@@ -8,12 +9,15 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
-    <h1>Journal Entry</h1>
     <div class="entry">
         {% for entry in entries %}
-            <p>{{ entry.date}}</p>
-            <p>{{ entry.content }}</p>
+        <div class="card text-bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header">{{ entry.date}}</p></div>
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text"><p>{{ entry.content }}</p></p>
+            </div>
+          </div>
         {% endfor %}
     </div>
-    <h1>Goal Tracker</h1>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Journal, Goal, Entries
+from .models import Journal, Goal, Entries, Timer
 
 class JournalForm(ModelForm):
     class Meta:
@@ -34,7 +34,7 @@ class EntryForm(ModelForm):
 class GoalForm(ModelForm):
     class Meta:
         model = Goal
-        fields = ('name','goal_time', 'frequency', 'date', 'progress')
+        fields = ('name','goal_time', 'frequency', 'date', 'user')
 
 
     def __init__(self, *args, **kwargs):
@@ -43,7 +43,18 @@ class GoalForm(ModelForm):
         self.fields['goal_time'].label = ""
         self.fields['frequency'].label = ""
         self.fields['date'].label = ""
-        self.fields['progress'].label = ""
         self.fields['name'].widget.attrs['placeholder'] = "Write a New Goal"
         self.fields['goal_time'].widget.attrs['placeholder'] = "Duration of Each Goal Attempt"
         self.fields['frequency'].widget.attrs['placeholder'] = "Number of Total Goal Attempts" 
+        self.fields['date'].widget = forms.HiddenInput()
+        self.fields['user'].widget = forms.HiddenInput()
+
+class TimerForm(ModelForm):
+    class Meta:
+        model = Timer
+        fields = ('id', 'time')
+    
+    def __init__(self, *args, **kwargs):
+        super(ModelForm, self).__init__(*args, **kwargs)
+        self.fields['id'].widget = forms.HiddenInput()
+        self.fields['time'].widget = forms.HiddenInput()
