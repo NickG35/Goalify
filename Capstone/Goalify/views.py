@@ -1,10 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import User, Journal, Goal, Entries, Timer
-from .forms import JournalForm, GoalForm, EntryForm, TimerForm
+from .forms import JournalForm, GoalForm, EntryForm, TimerForm, ProgressForm
 from datetime import datetime
 import time
 import json
@@ -12,7 +12,7 @@ current_time = datetime.now()
 
  # Create your views here.
 def index(request):
-     goals = Goal.objects.filter(user=request.user).all()
+     goals = Goal.objects.filter(user=request.user).all().order_by('-date')
      journals = Journal.objects.filter(user=request.user).all()
      if request.method == "POST":
           formo = GoalForm(request.POST)
@@ -31,6 +31,8 @@ def index(request):
                new_goal.name = request.POST['name']
                new_goal.goal_time = request.POST['goal_time']
                new_goal.frequency = request.POST['frequency']
+               new_goal.progress_start = 0
+               new_goal.progress_total = request.POST['frequency']
                new_goal.date = current_time
                new_goal.save()
                Timer.objects.create(id=new_goal.id, time=new_goal.goal_time)
@@ -66,14 +68,27 @@ def entry(request, journal_id):
           })
 
 def timer(request, timer_id):
-          times = Timer.objects.filter(id=timer_id).all()
-          clock = times.values_list('time', flat=True)[0]
-          moving_time = "00:00"
-          return render(request, "goalify/timer.html", {
-               'times': times,
-               'clock': clock,
-               'moving_time': moving_time
-          })
+          if request.method == "POST":
+               goal = Goal.objects.filter(id=timer_id)
+               goal_progress = goal.values_list('progress_start', flat=True)[0]
+               new_goal = goal_progress + 1
+               proform = ProgressForm(request.POST)
+               if proform.is_valid():
+                    Goal.objects.filter(id=timer_id).update(progress_start=new_goal)
+               return redirect("index")
+          else:
+               goals = Goal.objects.filter(id=timer_id).all()
+               proform = ProgressForm
+               times = Timer.objects.filter(id=timer_id).all()
+               clock = times.values_list('time', flat=True)[0]
+               moving_time = "00:00"
+               return render(request, "goalify/timer.html", {
+                    'goals': goals,
+                    'proform': proform,
+                    'times': times,
+                    'clock': clock,
+                    'moving_time': moving_time
+               })
      
 
 def history(request):

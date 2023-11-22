@@ -34,7 +34,7 @@ class EntryForm(ModelForm):
 class GoalForm(ModelForm):
     class Meta:
         model = Goal
-        fields = ('name','goal_time', 'frequency', 'date', 'user')
+        fields = ('name','goal_time', 'frequency', 'date', 'user', 'progress_start', 'progress_total')
 
 
     def __init__(self, *args, **kwargs):
@@ -48,6 +48,8 @@ class GoalForm(ModelForm):
         self.fields['frequency'].widget.attrs['placeholder'] = "Number of Total Goal Attempts" 
         self.fields['date'].widget = forms.HiddenInput()
         self.fields['user'].widget = forms.HiddenInput()
+        self.fields['progress_start'].widget = forms.HiddenInput()
+        self.fields['progress_total'].widget = forms.HiddenInput()
 
 class TimerForm(ModelForm):
     class Meta:
@@ -58,3 +60,12 @@ class TimerForm(ModelForm):
         super(ModelForm, self).__init__(*args, **kwargs)
         self.fields['id'].widget = forms.HiddenInput()
         self.fields['time'].widget = forms.HiddenInput()
+
+class ProgressForm(ModelForm):
+    class Meta:
+        model = Goal
+        fields = ('progress_start',)
+    
+    def __init__(self, *args, **kwargs):
+        super(ModelForm, self).__init__(*args, **kwargs)
+        self.fields['progress_start'].widget = forms.HiddenInput()

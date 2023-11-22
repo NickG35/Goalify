@@ -39,7 +39,7 @@
             <th scope="col">Duration of Goal</th>
             <th scope="col">Goal Frequency</th>
             <th scope="col">Progress</th>
-            <th scope="col">Timer</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -48,9 +48,26 @@
                 <td>{{ goal.name }}</td>
                 <td>{{ goal.goal_time }} minutes</td>
                 <td>{{ goal.frequency }}</td>
-                <td>0/{{ goal.frequency }}</td>
-                <td><a href= "{% url 'timer' timer_id=goal.id %}">Submit</button></td>
+                <td><span id="goal_start_{{goal.id}}">{{ goal.progress_start }}</span>/<span id="goal_end_{{goal.id}}">{{ goal.progress_total }}</span></td>
+                <td id="timey_{{goal.id}}"><a href= "{% url 'timer' timer_id=goal.id %}">Submit</a></td>
+                <td><a id='log_{{goal.id}}'>Goal Log</a></td>       
           </tr>
+          <script>
+             document.addEventListener('DOMContentLoaded', function() {
+                const id = '{{ goal.id }}';
+                const span1 = document.getElementById(`goal_start_${id}`);
+                const span2 = document.getElementById(`goal_end_${id}`);
+
+                if(span1.innerText === span2.innerText) {
+                    document.getElementById(`log_${id}`).style.display = 'block';
+                    document.getElementById(`timey_${id}`).style.display = 'none';
+                    
+                } else {
+                    document.getElementById(`log_${id}`).style.display = 'none';
+                    document.getElementById(`timey_${id}`).style.display = 'block';
+                }
+            });
+          </script>
           {% endfor %}
         </tbody>
       </table>
