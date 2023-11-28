@@ -3,17 +3,17 @@ from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import User, Journal, Goal, Entries, Timer
+from .models import User, Journal, Goal, Entries, Timer, History
 from .forms import JournalForm, GoalForm, EntryForm, TimerForm, ProgressForm
-from datetime import datetime
+from datetime import datetime, date
 import time
 import json
 current_time = datetime.now()
 
  # Create your views here.
 def index(request):
-     goals = Goal.objects.filter(user=request.user).all().order_by('-date')
-     journals = Journal.objects.filter(user=request.user).all()
+     goals = Goal.objects.filter(user=request.user).all().order_by('-date').all()
+     journals = Journal.objects.filter(user=request.user).all().order_by('-journal_date').all()
      if request.method == "POST":
           formo = GoalForm(request.POST)
           form = JournalForm(request.POST)
@@ -22,6 +22,8 @@ def index(request):
                new_journal.journal_color = request.POST['journal_color']
                new_journal.journal_style = f"{new_journal.journal_color}.png"
                new_journal.journal_name = request.POST['journal_name']
+               timey = datetime.now()
+               new_journal.journal_date = timey
                new_journal.user = request.user
                new_journal.save()
                return HttpResponseRedirect(reverse("index"))
@@ -33,7 +35,8 @@ def index(request):
                new_goal.frequency = request.POST['frequency']
                new_goal.progress_start = 0
                new_goal.progress_total = request.POST['frequency']
-               new_goal.date = current_time
+               timey = datetime.now()
+               new_goal.date = timey
                new_goal.save()
                Timer.objects.create(id=new_goal.id, time=new_goal.goal_time)
                return HttpResponseRedirect(reverse("index"))
@@ -56,7 +59,7 @@ def entry(request, journal_id):
                new_entry = formy.save()
                new_entry.user = request.user
                new_entry.journal = journal
-               current_time = datetime.now()
+               current_time = date
                new_entry.date = current_time
                new_entry.save()
           return HttpResponseRedirect('#')
@@ -92,7 +95,22 @@ def timer(request, timer_id):
      
 
 def history(request):
-     return render(request, "goalify/history.html")
+     history = History.objects.filter(user=request.user).all().order_by('-date').all()
+     if request.method == "POST":
+          name = request.POST['name']
+          time = request.POST['time']
+          frequency = request.POST['frequency']
+          id = request.POST['id']
+          date_str = current_time
+          formatted_date = date_str.strftime("%Y-%m-%d %H:%M:%S.%f%z")
+          History.objects.create(user=request.user, name=name, goal_time=time, frequency=frequency, date=formatted_date)
+          goal_gone = Goal.objects.filter(id=id).all()
+          goal_gone.delete()
+          return HttpResponseRedirect('#')
+     else:
+          return render(request, "goalify/history.html", {
+               'history': history
+          })
 
 def login_view(request):
      if request.method == "POST":

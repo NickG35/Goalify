@@ -16,7 +16,6 @@
         <button type="submit" id='submitButton' class="btn btn-primary">Mark Goal as Complete</button>
     </form>
 {% endfor %}
-
     <script>
        let timerInterval;
        let totalSeconds; 
@@ -32,7 +31,6 @@
             const minutesElement = document.querySelector('.moving_time');
             const minutes = parseInt(minutesElement.innerText);
             totalSeconds = minutes * 60;
-
             timerInterval = setInterval(updateCountdownTimer, 1000);
        }
 

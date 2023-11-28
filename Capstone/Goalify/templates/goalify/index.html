@@ -2,29 +2,48 @@
 
 {% block body%}
 <script>
-    function customize(){
+    function color_pick(event){
         var color_form = document.getElementById("journal_color");
-        var color = color_form.value;
-        var change = document.getElementById('journal-design').src = `/static/Images/${color}.png`;
+        var id = event.target.id;
+        color_form.value = id;
+        var change = document.getElementById('journal-design_big').src = `/static/Images/${color_form.value}.png`;
     }
 </script>
-    <h3>Hello, {{ request.user.username }}.</h3>
+    <h2 class="greeting">Hello, {{ request.user.username }}.</h2>
     <div class="journal-form">
-        <form action="" method="POST" onchange="customize(this)">
+        <form action="" method="POST">
             {% csrf_token %}
-            {{ form }}
-            <button type="submit" class="btn btn-primary">Add Journal</button>
+            <div class="formy">
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Add Journal</button>
+            </div>
         </form>
+        <div class="container text-center">
+            <div class="row align-items-start">
+                <div class="col">
+                    <img id="journal-design_big" src="/static/Images/Red.png" alt="journal-pic"></img>
+                </div>
+                <div class="col">
+                    <div class="color_picker">
+                        <img id="red" class="color" onclick="color_pick(event)" src="/static/Images/Red_Square.png" alt="Red"></img>
+                        <img id="blue" class="color" onclick="color_pick(event)" src="/static/Images/Blue_Square.png" alt="Blue"></img>
+                        <img id="green" class="color" onclick="color_pick(event)" src="/static/Images/Lime_Square.png" alt="Green"></img>
+                        <img id="yellow" class="color" onclick="color_pick(event)" src="/static/Images/Yellow_Square.png" alt="Yellow"></img>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <img id="journal-design" src="/static/Images/Red.png" alt="journal-pic"></img>
-    <h1>Your Journals</h1>
-    <div>
+    <h1 class="header">Your Journals</h1>
+    <div class="row" id="books">
         {% for journal in journals %}
-            <img id="journal-design" src="{{ journal.journal_style.url }}">
-            <p><a href= "{% url 'entry' journal_id=journal.id %}">{{ journal.journal_name }}</a></p>
+            <div class="col-md-3 ml-1 mr-1">
+                <img id="journal-design" src="{{ journal.journal_style.url }}">
+                <p><a href= "{% url 'entry' journal_id=journal.id %}">{{ journal.journal_name }}</a></p>
+            </div>
         {% endfor %}
     </div>
-    <h1>Goal Tracker</h1>
+    <h1 class="header">Goal Tracker</h1>
     <div class="goal-form">
         <form action="" method="POST">
             {% csrf_token %}
@@ -39,7 +58,7 @@
             <th scope="col">Duration of Goal</th>
             <th scope="col">Goal Frequency</th>
             <th scope="col">Progress</th>
-            <th></th>
+            <th>Timer</th>
           </tr>
         </thead>
         <tbody>
@@ -49,8 +68,19 @@
                 <td>{{ goal.goal_time }} minutes</td>
                 <td>{{ goal.frequency }}</td>
                 <td><span id="goal_start_{{goal.id}}">{{ goal.progress_start }}</span>/<span id="goal_end_{{goal.id}}">{{ goal.progress_total }}</span></td>
-                <td id="timey_{{goal.id}}"><a href= "{% url 'timer' timer_id=goal.id %}">Submit</a></td>
-                <td><a id='log_{{goal.id}}'>Goal Log</a></td>       
+                <td id="timey_{{goal.id}}"><a href= "{% url 'timer' timer_id=goal.id %}"><i class="fa-regular fa-clock"></i></a></td>
+                <td> 
+                    <form id='log_{{goal.id}}' action="{% url 'history' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="user" value="{{goal.user}}">
+                        <input type="hidden" name="name" value="{{goal.name}}">
+                        <input type="hidden" name="time" value="{{goal.goal_time}}">
+                        <input type="hidden" name="frequency" value="{{goal.frequency}}">
+                        <input type="hidden" name="date" value="{{goal.date}}">
+                        <input type="hidden" name="id" value="{{goal.id}}">
+                        <button type="submit" class="btn btn-light"><i class="fa-solid fa-check" style="color: #3ded0c;"></i></button>
+                    </form>
+                </td>       
           </tr>
           <script>
              document.addEventListener('DOMContentLoaded', function() {
@@ -61,6 +91,8 @@
                 if(span1.innerText === span2.innerText) {
                     document.getElementById(`log_${id}`).style.display = 'block';
                     document.getElementById(`timey_${id}`).style.display = 'none';
+                    var form = document.getElementById(`log_${id}`);
+                    form.submit();
                     
                 } else {
                     document.getElementById(`log_${id}`).style.display = 'none';

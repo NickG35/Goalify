@@ -2,4 +2,20 @@
 
 {% block body %}
 <h1>Goals Completed</h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Goal</th>
+        <th scope="col">Duration of Goal</th>
+        <th scope="col">Goal Frequency</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for histories in history %}
+      <tr>
+            <td>{{ histories.name }}</td>
+            <td>{{ histories.goal_time }} minutes</td>
+            <td>{{ histories.frequency }}</td>           
+      </tr>
+    {% endfor %}
 {% endblock %}

@@ -1,3 +1,110 @@
 #journal-design{
     width: 175px;
 }
+
+#journal-design_big{
+    width: 375px;
+}
+
+.journal-form{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    justify-content: center;
+
+}
+
+#books {
+    text-align: center;
+}
+
+.header {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.col-md-3{
+
+    
+}
+
+.row {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.formy{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.goal-form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#progress-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+#progress-bar {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    clip: rect(0, 200px, 200px, 100px);
+}
+
+#progress-bar-fill {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    clip: rect(0, 100px, 200px, 0);
+    background-color: #3498db;
+    transform-origin: center;
+}
+
+.color {
+    width: 30px;
+}
+
+.color:hover {
+    border: solid 2px black;
+}
+
+#green, #yellow {
+    border: solid 1.5px black;
+}
+
+#green:hover, #yellow:hover{
+    border: solid 3px black;
+}
+
+
+
+.row {
+    width: 55%;
+    margin-left: 350px;
+    justify-content: center;
+}
+
+.color_picker {
+    margin-top: 200px;
+    margin-bottom: 200px;
+}
