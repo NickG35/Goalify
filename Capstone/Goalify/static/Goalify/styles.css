@@ -18,15 +18,25 @@
     text-align: center;
 }
 
-.header {
+.buttony {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#pause, #resume {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.header, .moving_time {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
-}
-
-.col-md-3{
-
-    
+    font-style: sans-serif;
 }
 
 .row {
@@ -56,30 +66,6 @@
     text-align: center;
 }
 
-#progress-container {
-    position: relative;
-    width: 200px;
-    height: 200px;
-}
-
-#progress-bar {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    clip: rect(0, 200px, 200px, 100px);
-}
-
-#progress-bar-fill {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    clip: rect(0, 100px, 200px, 0);
-    background-color: #3498db;
-    transform-origin: center;
-}
-
 .color {
     width: 30px;
 }
@@ -88,15 +74,9 @@
     border: solid 2px black;
 }
 
-#green, #yellow {
-    border: solid 1.5px black;
+.clicked {
+    border: solid 2px black;
 }
-
-#green:hover, #yellow:hover{
-    border: solid 3px black;
-}
-
-
 
 .row {
     width: 55%;
@@ -107,4 +87,56 @@
 .color_picker {
     margin-top: 200px;
     margin-bottom: 200px;
+}
+
+#rowy {
+    border: 1px solid;
+}
+
+
+
+.journal_creation, .journal_button{
+    display: inline-block;
+}
+
+.fa-circle-play {
+    width: 200px;
+    height: 200px;
+}
+
+.moving_time {
+    font-family: monospace;
+    text-align: center;
+    font-size: 100px;
+    margin: 20px;
+    margin-top: 150px;
+    margin-bottom: 150px;
+    color: #5de627;
+}
+
+.time_border {
+    border: 15px solid black;
+    border-radius: 100%;
+    width: 500px;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.timer_body{
+    background-color: black;
+}
+
+.greeting {
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.spaced {
+    margin: 100px;
+}
+
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
 }

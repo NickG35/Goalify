@@ -5,19 +5,19 @@
     function color_pick(event){
         var color_form = document.getElementById("journal_color");
         var id = event.target.id;
+        var clickableElements = document.querySelectorAll('.color');
+        clickableElements.forEach(function(el){
+            el.classList.remove('clicked');
+        });
+        event.target.classList.add('clicked');
         color_form.value = id;
         var change = document.getElementById('journal-design_big').src = `/static/Images/${color_form.value}.png`;
+        console.log("clicked element classes: " + event.target.className);
     }
 </script>
     <h2 class="greeting">Hello, {{ request.user.username }}.</h2>
+    <h1 class="header">Create a Journal</h1>
     <div class="journal-form">
-        <form action="" method="POST">
-            {% csrf_token %}
-            <div class="formy">
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-primary">Add Journal</button>
-            </div>
-        </form>
         <div class="container text-center">
             <div class="row align-items-start">
                 <div class="col">
@@ -25,14 +25,23 @@
                 </div>
                 <div class="col">
                     <div class="color_picker">
-                        <img id="red" class="color" onclick="color_pick(event)" src="/static/Images/Red_Square.png" alt="Red"></img>
-                        <img id="blue" class="color" onclick="color_pick(event)" src="/static/Images/Blue_Square.png" alt="Blue"></img>
-                        <img id="green" class="color" onclick="color_pick(event)" src="/static/Images/Lime_Square.png" alt="Green"></img>
-                        <img id="yellow" class="color" onclick="color_pick(event)" src="/static/Images/Yellow_Square.png" alt="Yellow"></img>
+                        <img id="red" class="color clicked" onclick="color_pick(event)" src="/static/Images/Red_Square.png" alt="Red">
+                        <img id="blue" class="color" onclick="color_pick(event)" src="/static/Images/Blue_Square.png" alt="Blue">
+                        <img id="green" class="color" onclick="color_pick(event)" src="/static/Images/Lime_Square.png" alt="Green">
+                        <img id="yellow" class="color" onclick="color_pick(event)" src="/static/Images/Yellow_Square.png" alt="Yellow">
                     </div>
                 </div>
             </div>
         </div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="journal_creation">
+                {{ form.as_p }}
+            </div>
+            <div class="journal_button">
+                <button type="submit" class="btn btn-success">Create</button> 
+            </div>      
+        </form>
     </div>
     <h1 class="header">Your Journals</h1>
     <div class="row" id="books">
@@ -68,7 +77,7 @@
                 <td>{{ goal.goal_time }} minutes</td>
                 <td>{{ goal.frequency }}</td>
                 <td><span id="goal_start_{{goal.id}}">{{ goal.progress_start }}</span>/<span id="goal_end_{{goal.id}}">{{ goal.progress_total }}</span></td>
-                <td id="timey_{{goal.id}}"><a href= "{% url 'timer' timer_id=goal.id %}"><i class="fa-regular fa-clock"></i></a></td>
+                <td id="timey_{{goal.id}}"><a href= "{% url 'timer' timer_id=goal.id %}"><i class="fa-regular fa-circle-play" style="color: #000;"></i></a></td>
                 <td> 
                     <form id='log_{{goal.id}}' action="{% url 'history' %}" method="POST">
                         {% csrf_token %}

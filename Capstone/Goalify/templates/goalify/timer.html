@@ -2,14 +2,18 @@
 
 {% block body %}
 {% for goal in goals %}
-    <h1>{{ goal.name }}</h1>
+    <h1 class="header">{{ goal.name }}</h1>
 {% endfor %}
 {% for time in times %}
     <p class="time_id">{{ time.id }}</p>
-    <p class="moving_time">{{ clock }}:00</p>
-    <button onclick="startCountdownTimer()" class="start">Start</button>
-    <button onclick="pause_time()" class="pause">Pause</button>
-    <button onclick="resumeCountdownTimer()" class="resume">Resume</button>
+    <div class="time_border">
+        <p class="moving_time">{{ clock }}:00</p>
+    </div>
+    <div class="buttony">
+        <button onclick="startCountdownTimer()" class="btn btn-primary" id="start">Start</button>
+        <button onclick="pause_time()" class="btn btn-primary" id="pause">Pause</button>
+        <button onclick="resumeCountdownTimer()" class="btn btn-primary" id="resume">Resume</button>
+    </div>
     <form method="post" action="{% url 'timer' timer_id=time.id %} " class="proform">
         {% csrf_token %}
         {{ proform }}
@@ -21,13 +25,13 @@
        let totalSeconds; 
        document.querySelector('#submitButton').style.display = 'none';
        document.querySelector('.proform').style.display = 'none';
-       document.querySelector('.pause').style.display = 'none';
-       document.querySelector('.resume').style.display = 'none';
+       document.querySelector('#pause').style.display = 'none';
+       document.querySelector('#resume').style.display = 'none';
        document.querySelector('.time_id').style.display = 'none';
 
        function startCountdownTimer() {
-            document.querySelector('.start').style.display = 'none';
-            document.querySelector('.pause').style.display = 'block';
+            document.querySelector('#start').style.display = 'none';
+            document.querySelector('#pause').style.display = 'block';
             const minutesElement = document.querySelector('.moving_time');
             const minutes = parseInt(minutesElement.innerText);
             totalSeconds = minutes * 60;
@@ -45,7 +49,7 @@
                     clearInterval(timerInterval);
                     document.querySelector('.moving_time').innerText = "Goal Complete!";
                     document.querySelector('.proform').style.display = 'block';
-                    document.querySelector('.pause').style.display = 'none';
+                    document.querySelector('#pause').style.display = 'none';
                     document.getElementById('submitButton').click();
                 } else {
                     totalSeconds--;
@@ -53,14 +57,14 @@
        };
 
         function pause_time () {
-            document.querySelector('.pause').style.display = 'none';
-            document.querySelector('.resume').style.display = 'block';
+            document.querySelector('#pause').style.display = 'none';
+            document.querySelector('#resume').style.display = 'block';
             clearInterval(timerInterval);
         }
 
         function resumeCountdownTimer(){
-            document.querySelector('.pause').style.display = 'block';
-            document.querySelector('.resume').style.display = 'none';
+            document.querySelector('#pause').style.display = 'block';
+            document.querySelector('#resume').style.display = 'none';
             timerInterval = setInterval(updateCountdownTimer, 1000);
         }
     </script>
