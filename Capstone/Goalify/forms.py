@@ -45,8 +45,11 @@ class GoalForm(ModelForm):
         self.fields['frequency'].label = ""
         self.fields['date'].label = ""
         self.fields['name'].widget.attrs['placeholder'] = "Write a New Goal"
-        self.fields['goal_time'].widget.attrs['placeholder'] = "Duration of Each Goal Attempt"
-        self.fields['frequency'].widget.attrs['placeholder'] = "Number of Total Goal Attempts" 
+        self.fields['goal_time'].widget.attrs['placeholder'] = "Duration of Goal"
+        self.fields['frequency'].widget.attrs['placeholder'] = "Number of Goal Attempts" 
+        self.fields['name'].widget.attrs['id'] = "goals"
+        self.fields['goal_time'].widget.attrs['id'] = "goals"
+        self.fields['frequency'].widget.attrs['id'] = "goals"
         self.fields['date'].widget = forms.HiddenInput()
         self.fields['user'].widget = forms.HiddenInput()
         self.fields['progress_start'].widget = forms.HiddenInput()

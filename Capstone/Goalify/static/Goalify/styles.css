@@ -1,3 +1,6 @@
+body {
+    background-color: #E8D9D5;
+}
 #journal-design{
     width: 175px;
 }
@@ -57,6 +60,11 @@
 .goal-form {
     text-align: center;
     margin-bottom: 20px;
+    border: 1px solid black;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 .table {
@@ -130,6 +138,9 @@
 .greeting {
     margin-top: 20px;
     margin-left: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #0e5487;
 }
 
 .spaced {
@@ -139,4 +150,33 @@
 h1{
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
+    color: #0e5487;
+}
+
+.journal-name {
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #0e5487;
+}
+
+.journal-name:hover {
+    color: black;
+}
+
+.table_info {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #0e5487;
+}
+
+
+.table_result {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #0e5487;
+}
+
+#goals{
+    width:250px;
+    margin: 5px;
 }
