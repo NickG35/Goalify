@@ -2,7 +2,13 @@
 
 {% block body%}
 <script>
-    document.querySelector('#submit_button').style.display = 'none';
+    document.addEventListener('DOMContentLoaded', function() {
+        red = document.querySelector('#red')
+        red.classList.add('clicked');
+        var color_form = document.getElementById("journal_color");
+        color_form.value = "red";
+        
+    });
     function color_pick(event){
         var color_form = document.getElementById("journal_color");
         var id = event.target.id;
@@ -15,6 +21,7 @@
         var change = document.getElementById('journal-design_big').src = `/static/Images/${color_form.value}.png`;
         console.log("clicked element classes: " + event.target.className);
     }
+   
 </script>
     <h2 class="greeting">Hello, {{ request.user.username }}.</h2>
     <h1 class="header">Create a Journal</h1>
@@ -26,7 +33,7 @@
                 </div>
                 <div class="col">
                     <div class="color_picker">
-                        <img id="red" class="color clicked" onclick="color_pick(event)" src="/static/Images/Red_Square.png" alt="Red">
+                        <img id="red" class="color" onclick="color_pick(event)" src="/static/Images/Red_Square.png" alt="Red">
                         <img id="blue" class="color" onclick="color_pick(event)" src="/static/Images/Blue_Square.png" alt="Blue">
                         <img id="green" class="color" onclick="color_pick(event)" src="/static/Images/Lime_Square.png" alt="Green">
                         <img id="yellow" class="color" onclick="color_pick(event)" src="/static/Images/Yellow_Square.png" alt="Yellow">
@@ -39,10 +46,7 @@
             <div class="journal_creation">
                 {{ form.as_p }}
             </div>
-            <div class="journal_button">
-                <button type="submit" id="submit_button" class="btn btn-success">Create</button> 
-                <i class="fa-solid fa-circle-plus fa-xl" style="color: #74c70f;"></i>
-            </div>      
+            <button type="submit" class="btn btn-success">Create</button> 
         </form>
     </div>
     <h1 class="header">Your Journals</h1>
@@ -60,7 +64,6 @@
             {% csrf_token %}
             {{ formo }}
             <button type="submit" id="submit_button" class="btn btn-primary">Add Goal</button>
-            <i class="fa-solid fa-circle-plus fa-xl" style="color: #74c70f;"></i>
         </form>
     </div>
     <table class="table">
@@ -80,7 +83,9 @@
                 <td class="table_result">{{ goal.goal_time }} minutes</td>
                 <td class="table_result">{{ goal.frequency }}</td>
                 <td class="table_result"><span id="goal_start_{{goal.id}}">{{ goal.progress_start }}</span>/<span id="goal_end_{{goal.id}}">{{ goal.progress_total }}</span></td>
-                <td class="table_result" id="timey_{{goal.id}}"><a href= "{% url 'timer' timer_id=goal.id %}"><i class="fa-regular fa-circle-play" style="color: #0e5487;"></i></a></td>
+                <td class="table_result" id="timey_{{goal.id}}">
+                    <a href= "{% url 'timer' timer_id=goal.id %}"><i class="fa-regular fa-circle-play" style="color: #0e5487;"></i></a>
+                </td>
                 <td> 
                     <form id='log_{{goal.id}}' action="{% url 'history' %}" method="POST">
                         {% csrf_token %}
@@ -90,7 +95,7 @@
                         <input type="hidden" name="frequency" value="{{goal.frequency}}">
                         <input type="hidden" name="date" value="{{goal.date}}">
                         <input type="hidden" name="id" value="{{goal.id}}">
-                        <button type="submit" class="btn btn-light"><i class="fa-solid fa-check" style="color: #3ded0c;"></i></button>
+                        <button type="submit" class="btn btn-light"></button>
                     </form>
                 </td>       
           </tr>

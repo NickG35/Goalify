@@ -17,6 +17,7 @@ class JournalForm(ModelForm):
         self.fields['journal_color'].widget = forms.HiddenInput()
         self.fields['journal_color'].widget.attrs['id'] = "journal_color"
         self.fields['journal_name'].widget.attrs['placeholder'] = "Name Your Journal"
+        self.fields['journal_name'].widget.attrs['id'] = "journal_name"
 
 class EntryForm(ModelForm):
     class Meta:

@@ -60,7 +60,6 @@ body {
 .goal-form {
     text-align: center;
     margin-bottom: 20px;
-    border: 1px solid black;
     width: 50%;
     margin-left: auto;
     margin-right: auto;
@@ -105,11 +104,6 @@ body {
 
 .journal_creation, .journal_button{
     display: inline-block;
-}
-
-.fa-circle-play {
-    width: 200px;
-    height: 200px;
 }
 
 .moving_time {
@@ -179,4 +173,29 @@ h1{
 #goals{
     width:250px;
     margin: 5px;
+}
+
+#add {
+    color: black;
+}
+
+#journal_submit {
+    height: 40px;
+}
+
+#journal_name {
+    height: 40px;
+}
+
+.btn {
+    border: #ff6347;
+}
+
+.btn:hover .fa-circle-plus {
+    color: #ff6347;
+}
+
+.fa-circle-plus:hover {
+    background-color: #E8D9D5;
+
 }
