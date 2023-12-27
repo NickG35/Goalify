@@ -74,6 +74,7 @@ body {
 }
 
 .color {
+
     width: 30px;
 }
 
@@ -113,11 +114,11 @@ body {
     margin: 20px;
     margin-top: 150px;
     margin-bottom: 150px;
-    color: #5de627;
+    color: #0e5487;
 }
 
 .time_border {
-    border: 15px solid black;
+    border: 15px solid #0e5487;
     border-radius: 100%;
     width: 500px;
     height: 500px;
@@ -130,8 +131,8 @@ body {
 }
 
 .greeting {
-    margin-top: 20px;
-    margin-left: 10px;
+    margin-top: 30px;
+    margin-left: 20px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     color: #0e5487;
@@ -154,6 +155,9 @@ h1{
     color: #0e5487;
 }
 
+.locked-text {
+    color: #0e5487;
+}
 .journal-name:hover {
     color: black;
 }
@@ -198,4 +202,74 @@ h1{
 .fa-circle-plus:hover {
     background-color: #E8D9D5;
 
+}
+
+.entry-form {
+    text-align: center;
+}
+
+.card{
+    width: 450px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: 550px;
+    margin-top: 25px;
+}
+
+.page {
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-item {
+    margin: 0 5px; /* Adjust the margin as needed for spacing between items */
+}
+
+.nav-link {
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    position: center;
+}
+
+.entry {
+    margin: 20px;
+}
+
+.form-control {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+}
+
+h2{
+    text-align: center;
+    color: #0e5487;
+}
+
+.locked-div{
+    margin-top: 10px;
+    text-align: center;
+}
+
+.log-in {
+    margin-top: 20px;
+}
+
+.navbar {
+    background-color: #0e5487;
+}
+
+#logo {
+    margin-left: auto;
+    margin-right: auto;
+    justify-self: center;
+    text-align: center;
 }

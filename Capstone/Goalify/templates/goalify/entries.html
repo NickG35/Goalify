@@ -1,23 +1,48 @@
 {% extends "goalify/layout.html" %}
 
 {% block body%}
-    <h1>{{ entry.journal }}</h1>
+    <h1 class="header">{{ journals }}</h1>
+  {% if page_obj.number == 1 %}
+    <h3 class="header">Create an Entry</h3>
     <div class="entry-form">
         <form action="" method="POST">
             {% csrf_token %}
             {{ formy }}
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="button-submission">
+              <button type="submit" class="btn btn-primary">Create</button>
+            </div>
         </form>
     </div>
+  {% endif %}
     <div class="entry">
-        {% for entry in entries %}
-        <div class="card text-bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header">{{ entry.date}}</p></div>
-            <div class="card-body">
-              <h5 class="card-title"></h5>
-              <p class="card-text"><p>{{ entry.content }}</p></p>
+        {% for entry in page_obj.object_list %}
+        <h3 class="header">
+            Journal Entry
+        </h3>
+        <div class="card">
+            <div class="card-header">
+                {{ entry.date}}
             </div>
-          </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p>{{ entry.content }}</p>
+                <footer class="blockquote-footer">{{ entry.user }}</footer>
+              </blockquote>
+            </div>
+        </div>   
         {% endfor %}
+    </div>
+    <div class="page">
+      <nav class="Page_number" aria-label="Page navigation example">
+         <ul class="pagination">
+            {% if page_obj.has_previous %}
+             <a id="previous" class="page-link" href="?page={{page_obj.previous_page_number}}" aria-label="Previous">Previous</a>
+            {% endif %}
+           <li class="page-item" id="page_count">Page {{page_obj.number}} of {{p.num_pages}}</li>
+           {% if page_obj.has_next %}
+             <a id="next" class="page-link" href="?page={{page_obj.next_page_number}}" aria-label="Next">Next</a>
+           {% endif %}
+         </ul>
+       </nav>
     </div>
 {% endblock %}

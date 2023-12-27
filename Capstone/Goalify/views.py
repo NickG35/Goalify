@@ -1,12 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import User, Journal, Goal, Entries, Timer, History
 from .forms import JournalForm, GoalForm, EntryForm, TimerForm, ProgressForm
 from datetime import datetime, date
-import time
+from django.utils import timezone
 import json
 current_time = datetime.now()
 
@@ -52,22 +53,33 @@ def index(request):
 
 def entry(request, journal_id):
      entries = Entries.objects.filter(journal_id=journal_id).all().order_by('-date')
-     journal = Journal.objects.get(id=journal_id)
+     journals = Journal.objects.get(id=journal_id)
      if request.method == "POST":
           formy = EntryForm(request.POST)
           if formy.is_valid():
                new_entry = formy.save()
                new_entry.user = request.user
-               new_entry.journal = journal
-               current_time = date
+               new_entry.journal = journals
+               current_time = timezone.now()
                new_entry.date = current_time
                new_entry.save()
           return HttpResponseRedirect('#')
      else:
+          p = Paginator(entries, 1)
+          page_number = request.GET.get('page')
+          try:
+            page_obj = p.get_page(page_number)
+          except PageNotAnInteger:
+            page_obj = p.page(1)
+          except EmptyPage:
+            page_obj = p.page(p.num_pages)
           formy = EntryForm
           return render(request, "goalify/entries.html", {
+               'page_obj': page_obj,
                'formy': formy,
-               'entries': entries
+               'entries': entries,
+               'journals': journals.journal_name,
+               'p': p
           })
 
 def timer(request, timer_id):

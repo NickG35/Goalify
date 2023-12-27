@@ -5,17 +5,17 @@
 <table class="table">
     <thead>
       <tr>
-        <th scope="col">Goal</th>
-        <th scope="col">Duration of Goal</th>
-        <th scope="col">Goal Frequency</th>
+        <th class="table_info" scope="col">Goal</th>
+        <th class="table_info" scope="col">Duration of Goal</th>
+        <th class="table_info" scope="col">Goal Frequency</th>
       </tr>
     </thead>
     <tbody>
     {% for histories in history %}
       <tr>
-            <td>{{ histories.name }}</td>
-            <td>{{ histories.goal_time }} minutes</td>
-            <td>{{ histories.frequency }}</td>           
+            <td class="table_result">{{ histories.name }}</td>
+            <td class="table_result">{{ histories.goal_time }} minutes</td>
+            <td class="table_result">{{ histories.frequency }}</td>           
       </tr>
     {% endfor %}
 {% endblock %}

@@ -10,14 +10,14 @@
         <p class="moving_time">{{ clock }}:00</p>
     </div>
     <div class="buttony">
-        <button onclick="startCountdownTimer()" class="btn btn-primary" id="start">Start</button>
-        <button onclick="pause_time()" class="btn btn-primary" id="pause">Pause</button>
-        <button onclick="resumeCountdownTimer()" class="btn btn-primary" id="resume">Resume</button>
+        <button onclick="startCountdownTimer()" class="btn btn-success" id="start">Start</button>
+        <button onclick="pause_time()" class="btn btn-success" id="pause">Pause</button>
+        <button onclick="resumeCountdownTimer()" class="btn btn-success" id="resume">Resume</button>
     </div>
     <form method="post" action="{% url 'timer' timer_id=time.id %} " class="proform">
         {% csrf_token %}
         {{ proform }}
-        <button type="submit" id='submitButton' class="btn btn-primary">Mark Goal as Complete</button>
+        <button type="submit" id='submitButton' class="btn btn-dark">Mark Goal as Complete</button>
     </form>
 {% endfor %}
     <script>

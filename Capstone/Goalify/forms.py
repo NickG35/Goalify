@@ -29,7 +29,7 @@ class EntryForm(ModelForm):
         self.fields['content'].label = ""
         self.fields['date'].widget = forms.HiddenInput()
         self.fields['journal'].widget = forms.HiddenInput()
-        self.fields['content'].widget.attrs['placeholder'] = "Write New Journal Entry"
+        self.fields['content'].widget = forms.Textarea(attrs={'rows': 10, 'cols': 60, 'placeholder': "Write New Journal Entry"})
 
 
 

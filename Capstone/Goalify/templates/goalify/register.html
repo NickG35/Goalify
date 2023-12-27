@@ -1,13 +1,12 @@
 {% extends "goalify/layout.html" %}
 
 {% block body %}
-
+<div class="log-in">
 <h2>Register</h2>
 
 {% if message %}
     <div>{{ message }}</div>
 {% endif %}
-
 <form action="{% url 'register' %}" method="post">
     {% csrf_token %}
     <div class="form-group">
@@ -26,5 +25,9 @@
         <input class="btn btn-primary" type="submit" value="Submit">
     </div>
 </form>
+<div class="locked-div">
+    <span class='locked-text'>Already have an account?</span> <a href="{% url 'login' %}">Login</a>
+</div>
+</div>
 
 {% endblock %}
