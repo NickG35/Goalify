@@ -5,21 +5,22 @@
   {% if page_obj.number == 1 %}
     <h3 class="header">Create an Entry</h3>
     <div class="entry-form">
-        <form action="" method="POST">
+        <form class="entry-formy" action="" method="POST">
             {% csrf_token %}
             {{ formy }}
-            <div class="button-submission">
+            <div id="submit_button">
               <button type="submit" class="btn btn-primary">Create</button>
             </div>
         </form>
     </div>
   {% endif %}
+  <!--set class for entry text area so i can make width smaller in mobile mode-->
     <div class="entry">
         {% for entry in page_obj.object_list %}
         <h3 class="header">
             Journal Entry
         </h3>
-        <div class="card">
+        <div id ="entry-card" class="card">
             <div class="card-header">
                 {{ entry.date}}
             </div>
@@ -36,11 +37,17 @@
       <nav class="Page_number" aria-label="Page navigation example">
          <ul class="pagination">
             {% if page_obj.has_previous %}
-             <a id="previous" class="page-link" href="?page={{page_obj.previous_page_number}}" aria-label="Previous">Previous</a>
+             <a class="page-link" href="?page={{page_obj.previous_page_number}}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+             </a>
             {% endif %}
            <li class="page-item" id="page_count">Page {{page_obj.number}} of {{p.num_pages}}</li>
            {% if page_obj.has_next %}
-             <a id="next" class="page-link" href="?page={{page_obj.next_page_number}}" aria-label="Next">Next</a>
+             <a class="page-link" href="?page={{page_obj.next_page_number}}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
            {% endif %}
          </ul>
        </nav>

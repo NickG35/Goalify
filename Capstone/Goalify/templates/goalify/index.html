@@ -50,74 +50,81 @@
         </form>
     </div>
     <h1 class="header">Your Journals</h1>
-    <div class="row" id="books">
-        {% for journal in journals %}
-            <div class="col-md-3 ml-1 mr-1">
-                <img id="journal-design" src="{{ journal.journal_style.url }}">
-                <p><a class="journal-name" href= "{% url 'entry' journal_id=journal.id %}">{{ journal.journal_name }}</a></p>
-            </div>
-        {% endfor %}
-    </div>
+        <div class="row row-cols-5 py-3" id="books">
+            {% for journal in journals %}
+                <div class="col mx-4">
+                    <img id="journal-design" src="{{ journal.journal_style.url }}">
+                    <p><a class="journal-name" href= "{% url 'entry' journal_id=journal.id %}">{{ journal.journal_name }}</a></p>
+                </div>
+            {% endfor %}
+        </div>
+
     <h1 class="header">Goal Tracker</h1>
     <div class="goal-form">
         <form action="" method="POST">
             {% csrf_token %}
             {{ formo }}
-            <button type="submit" id="submit_button" class="btn btn-primary">Add Goal</button>
+            <div class="goal_submit">
+                <button type="submit" id="submit_button" class="btn btn-primary">Add Goal</button>
+            </div>
         </form>
     </div>
-    <table class="table">
-        <thead>
-          <tr>
-            <th class="table_info" scope="col">Goal</th>
-            <th class="table_info" scope="col">Duration of Goal</th>
-            <th class="table_info" scope="col">Goal Frequency</th>
-            <th class="table_info" scope="col">Progress</th>
-            <th class="table_info">Timer</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for goal in goals %}
-          <tr>
-                <td class="table_result">{{ goal.name }}</td>
-                <td class="table_result">{{ goal.goal_time }} minutes</td>
-                <td class="table_result">{{ goal.frequency }}</td>
-                <td class="table_result"><span id="goal_start_{{goal.id}}">{{ goal.progress_start }}</span>/<span id="goal_end_{{goal.id}}">{{ goal.progress_total }}</span></td>
-                <td class="table_result" id="timey_{{goal.id}}">
-                    <a href= "{% url 'timer' timer_id=goal.id %}"><i class="fa-regular fa-circle-play" style="color: #0e5487;"></i></a>
-                </td>
-                <td> 
-                    <form id='log_{{goal.id}}' action="{% url 'history' %}" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="user" value="{{goal.user}}">
-                        <input type="hidden" name="name" value="{{goal.name}}">
-                        <input type="hidden" name="time" value="{{goal.goal_time}}">
-                        <input type="hidden" name="frequency" value="{{goal.frequency}}">
-                        <input type="hidden" name="date" value="{{goal.date}}">
-                        <input type="hidden" name="id" value="{{goal.id}}">
-                        <button type="submit" class="btn btn-light"></button>
-                    </form>
-                </td>       
-          </tr>
-          <script>
-             document.addEventListener('DOMContentLoaded', function() {
-                const id = '{{ goal.id }}';
-                const span1 = document.getElementById(`goal_start_${id}`);
-                const span2 = document.getElementById(`goal_end_${id}`);
+    <div class="goal-table">
+        <table class="table table-striped" id="table">
+            <thead>
+            <tr>
+                <th class="table_info" scope="col">Goal</th>
+                <th class="table_info" scope="col">Duration</th>
+                <th class="table_info" scope="col">Frequency</th>
+                <th class="table_info" scope="col">Progress</th>
+                <th class="table_info" scope="col">Timer</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for goal in goals %}
+            <tr>
+                    <td class="table_result">{{ goal.name }}</td>
+                    <td class="table_result">{{ goal.goal_time }} minutes</td>
+                    <td class="table_result">{{ goal.frequency }}</td>
+                    <td class="table_result"><span id="goal_start_{{goal.id}}">{{ goal.progress_start }}</span>/<span id="goal_end_{{goal.id}}">{{ goal.progress_total }}</span></td>
+                    <td class="table_result" id="timey_{{goal.id}}"><a href= "{% url 'timer' timer_id=goal.id %}"><i class="fa-regular fa-circle-play" style="color: #0e5487;"></i></a></td>
+                    <td class="goal-forms"> 
+                        <form id='log_{{goal.id}}' action="{% url 'history' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="user" value="{{goal.user}}">
+                            <input type="hidden" name="name" value="{{goal.name}}">
+                            <input type="hidden" name="time" value="{{goal.goal_time}}">
+                            <input type="hidden" name="frequency" value="{{goal.frequency}}">
+                            <input type="hidden" name="date" value="{{goal.date}}">
+                            <input type="hidden" name="id" value="{{goal.id}}">
+                            <button type="submit" class="btn btn-light"></button>
+                        </form>
+                    </td>       
+            </tr>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const id = '{{ goal.id }}';
+                    const span1 = document.getElementById(`goal_start_${id}`);
+                    const span2 = document.getElementById(`goal_end_${id}`);
+                    const hidden_table = document.querySelectorAll('.goal-forms');
+                    hidden_table.forEach(function(table){
+                        table.style.display = 'none';
+                    });
 
-                if(span1.innerText === span2.innerText) {
-                    document.getElementById(`log_${id}`).style.display = 'block';
-                    document.getElementById(`timey_${id}`).style.display = 'none';
-                    var form = document.getElementById(`log_${id}`);
-                    form.submit();
-                    
-                } else {
-                    document.getElementById(`log_${id}`).style.display = 'none';
-                    document.getElementById(`timey_${id}`).style.display = 'block';
-                }
-            });
-          </script>
-          {% endfor %}
-        </tbody>
-      </table>
+                    if(span1.innerText === span2.innerText) {
+                        document.getElementById(`log_${id}`).style.display = 'block';
+                        document.getElementById(`timey_${id}`).style.display = 'none';
+                        var form = document.getElementById(`log_${id}`);
+                        form.submit();
+                        
+                    } else {
+                        document.getElementById(`log_${id}`).style.display = 'none';
+                        document.getElementById(`timey_${id}`).style.display = 'block';
+                    }
+                });
+            </script>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

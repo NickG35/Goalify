@@ -29,8 +29,8 @@ class EntryForm(ModelForm):
         self.fields['content'].label = ""
         self.fields['date'].widget = forms.HiddenInput()
         self.fields['journal'].widget = forms.HiddenInput()
-        self.fields['content'].widget = forms.Textarea(attrs={'rows': 10, 'cols': 60, 'placeholder': "Write New Journal Entry"})
-
+        self.fields['content'].widget = forms.Textarea(attrs={'rows': 12, 'cols': 52, 'placeholder': "Write New Journal Entry"})
+        self.fields['content'].widget.attrs['id'] = "entry_content"
 
 
 class GoalForm(ModelForm):
